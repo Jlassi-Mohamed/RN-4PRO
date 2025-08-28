@@ -6,7 +6,7 @@ WORKDIR /app
 # Copy package files first for better caching
 COPY package*.json ./
 COPY tsconfig.json ./
-COPY next.config.js ./  
+COPY next.config.mjs ./next.config.mjs  # ← SPECIFY FULL FILENAME
 
 # Install dependencies
 RUN npm ci
