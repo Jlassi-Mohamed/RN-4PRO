@@ -87,21 +87,25 @@ TEMPLATES = [
         },
     },
 ]
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'gestion',
-        'USER': 'root',
-        'PASSWORD': 'pzDXZzJhszWaJAtblsnpBxqNUYytYaBj',
-        'HOST': 'mysql-production-b881.up.railway.app',
-        'PORT': '3306',
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+if os.getenv("MYSQL_URL"):
+    DATABASES = {
+        "default": dj_database_url.parse(os.environ["MYSQL_URL"], engine="django.db.backends.mysql")
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'gestion',
+            'USER': 'root',
+            'PASSWORD': 'pzDXZzJhszWaJAtblsnpBxqNUYytYaBj',
+            'HOST': 'mysql-production-b881.up.railway.app',
+            'PORT': '3306',
+            'OPTIONS': {
+                'charset': 'utf8mb4',
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            }
         }
     }
-}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
