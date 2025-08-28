@@ -1,13 +1,6 @@
 #!/bin/sh
 set -e
 
-: "${PORT:=8000}"
-: "${MYSQLHOST:=mysql.railway.internal}"
-: "${MYSQLPORT:=3306}"
-: "${MYSQLUSER:=root}"
-: "${MYSQLPASSWORD:=}"
-: "${MYSQLDATABASE:=gestion}"
-
 echo "🚀 Entrypoint started..."
 
 # Retry migrate until DB is ready
