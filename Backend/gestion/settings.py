@@ -92,9 +92,9 @@ if os.getenv("MYSQL_URL"):
         "default": dj_database_url.parse(os.environ["MYSQL_URL"], engine="django.db.backends.mysql")
     }
 else:
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.mysql',
+    DATABASES = {
+         'default': {
+        'ENGINE': 'django.db.backends.mysql',
                 'NAME': os.getenv('MYSQLDATABASE', 'gestion'),
                 'USER': os.getenv('MYSQLUSER', 'root'),
                 'PASSWORD': os.getenv('MYSQLPASSWORD', ''),
@@ -106,8 +106,6 @@ else:
                 }
             }
         }
-
-    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
