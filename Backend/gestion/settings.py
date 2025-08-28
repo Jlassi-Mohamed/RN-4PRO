@@ -89,22 +89,21 @@ TEMPLATES = [
     },
 ]
 
-# Database
-if 'DATABASE_URL' in os.environ:
-    DATABASES = {
-        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+# Database settings
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('MYSQLDATABASE', 'gestion'),
+        'USER': os.environ.get('MYSQLUSER', 'root'),
+        'PASSWORD': os.environ.get('MYSQLPASSWORD', ''),
+        'HOST': os.environ.get('MYSQLHOST', 'localhost'),
+        'PORT': os.environ.get('MYSQLPORT', '3306'),
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.environ.get('MYSQLDATABASE'),
-            'USER': os.environ.get('MYSQLUSER'),
-            'PASSWORD': os.environ.get('MYSQLPASSWORD'),
-            'HOST': os.environ.get('MYSQLHOST'),
-            'PORT': os.environ.get('MYSQLPORT', '3306'),
-        }
-    }
+}
+
+# Optional: use dj_database_url if MYSQL_URL is set
+if 'MYSQL_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.parse(os.environ['MYSQL_URL'], engine='django.db.backends.mysql')
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
