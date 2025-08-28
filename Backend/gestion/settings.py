@@ -91,11 +91,11 @@ TEMPLATES = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQLDATABASE'),
-        'USER': os.environ.get('MYSQLUSER'),
-        'PASSWORD': os.environ.get('MYSQLPASSWORD'),
-        'HOST': os.environ.get('MYSQLHOST'),
-        'PORT': os.environ.get('MYSQLPORT', '3306'),
+        'NAME': 'gestion',
+        'USER': 'root',
+        'PASSWORD': 'pzDXZzJhszWaJAtblsnpBxqNUYytYaBj',
+        'HOST': 'mysql-production-b881.up.railway.app'
+        'PORT': '3306',
         'OPTIONS': {
             'charset': 'utf8mb4',
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
