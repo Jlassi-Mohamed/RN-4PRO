@@ -2,11 +2,7 @@
 set -e
 
 echo "🚀 Entrypoint started..."
-echo "DEBUG: Database settings:"
-echo "MYSQLHOST: $MYSQLHOST"
-echo "MYSQLUSER: $MYSQLUSER"
-echo "MYSQLDATABASE: $MYSQLDATABASE"
-echo "MYSQLPORT: $MYSQLPORT"
+
 
 # Retry migrate until DB is ready
 RETRIES=10
