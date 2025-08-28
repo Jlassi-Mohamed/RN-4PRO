@@ -3,7 +3,13 @@ set -e
 
 # Default port fallback if Railway does not inject $PORT
 : "${PORT:=8000}"
+echo "Waiting for MySQL to be ready..."
+while ! nc -z $MYSQLHOST $MYSQLPORT; do
+  sleep 3
+  echo "Database not ready yet... retrying in 3s"
+done
 
+echo "MySQL is up - continuing with startup..."
 echo "Waiting for database to be ready..."
 until python manage.py showmigrations > /dev/null 2>&1; do
   echo "Database not ready yet... retrying in 3s"
