@@ -166,7 +166,7 @@ async function getTotalProfit(): Promise<{ data: { value: string; raw?: number }
 
 // Map API status to component status
 function mapStatus(apiStatus: string): 'brouillon' | 'livré' | 'annulé' | 'confirmé' | 'payé' {
-  const statusMap: Record<string, 'brouillon' | 'livé' | 'livré' | 'annulé' | 'confirmé' | 'payé'> = {
+  const statusMap: Record<string, 'brouillon' | 'livré' | 'annulé' | 'confirmé' | 'payé'> = {
     'DRAFT': 'brouillon',
     'DELIVERED': 'livré',
     'CANCELLED': 'annulé',
