@@ -8,31 +8,21 @@ set -e
 : "${MYSQLPASSWORD:=}"
 : "${MYSQLDATABASE:=gestion}"
 
-echo "🚀 Entrypoint: waiting for MySQL at $MYSQLHOST:$MYSQLPORT ..."
+echo "🚀 Entrypoint started..."
 
-# Python-based wait loop (no nc required)
-until python - <<PY
-import sys, os
-try:
-    import pymysql
-    pymysql.connect(
-        host=os.getenv('MYSQLHOST'),
-        user=os.getenv('MYSQLUSER'),
-        password=os.getenv('MYSQLPASSWORD'),
-        database=os.getenv('MYSQLDATABASE'),
-        port=int(os.getenv('MYSQLPORT', 3306)),
-        connect_timeout=5
-    ).close()
-except Exception as e:
-    sys.exit(1)
-PY
-do
-  echo "Database not ready yet... retrying in 10s"
+# Retry migrate until DB is ready
+RETRIES=10
+until python manage.py migrate --noinput; do
+  if [ $RETRIES -le 0 ]; then
+    echo "❌ Migrations failed after multiple attempts."
+    exit 1
+  fi
+  echo "⚠️ Database not ready yet... retrying in 10s"
+  RETRIES=$((RETRIES-1))
   sleep 10
 done
 
-echo "✅ MySQL is up - applying migrations..."
-python manage.py migrate --noinput
+echo "✅ Migrations applied successfully."
 
 echo "Creating superusers if missing..."
 python manage.py shell <<'EOF'
@@ -54,5 +44,5 @@ EOF
 echo "Collecting static files..."
 python manage.py collectstatic --noinput || true
 
-echo "Starting Gunicorn on 0.0.0.0:$PORT..."
+echo "🚀 Starting Gunicorn on 0.0.0.0:$PORT ..."
 exec gunicorn backend.wsgi:application --bind 0.0.0.0:"$PORT" --workers 4 --threads 2 --log-level info
