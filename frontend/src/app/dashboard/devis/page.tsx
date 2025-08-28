@@ -705,8 +705,8 @@ export default function OrdersPage() {
           Produits de la commande {selectedOrder?.reference}
           {selectedOrder && (
             <Box sx={{ mt: 1 }}>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
+              <Grid display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+                <Box gridColumn="span 6">
                   <Typography variant="body2">
                     Total HT: {formatNumber(selectedOrder.total_ht)} TND
                   </Typography>
@@ -716,6 +716,7 @@ export default function OrdersPage() {
                   <Typography variant="body2" fontWeight="bold">
                     Total TTC: {formatNumber(selectedOrder.total_ttc)} TND
                   </Typography>
+                </Box>
                 </Grid>
                 <Grid item xs={6}>
                   {selectedOrder.withholding_tax_applied && (
