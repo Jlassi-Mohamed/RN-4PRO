@@ -88,23 +88,26 @@ TEMPLATES = [
     },
 ]
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQLDATABASE', 'gestion'),
-        'USER': os.environ.get('MYSQLUSER', 'root'),
-        'PASSWORD': os.environ.get('MYSQLPASSWORD', 'MhobbifualRHOndCHTXouMDQKlWewwbA'),
-        'HOST': os.environ.get('MYSQLHOST', 'mysql.railway.internal'),
-        'PORT': os.environ.get('MYSQLPORT', '3306'),
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            'charset': 'utf8mb4',
-            'connect_timeout': 10,  # 10 second timeout
-        },
-        'CONN_MAX_AGE': 300,  # 5 minutes
+if os.environ.get('MYSQL_URL'):
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ['MYSQL_URL'], engine='django.db.backends.mysql')
     }
-}
-
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ.get('MYSQLDATABASE', 'gestion'),
+            'USER': os.environ.get('MYSQLUSER', 'root'),
+            'PASSWORD': os.environ.get('MYSQLPASSWORD', ''),
+            'HOST': os.environ.get('MYSQLHOST', 'localhost'),
+            'PORT': os.environ.get('MYSQLPORT', '3306'),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+                'charset': 'utf8mb4',
+                # You can add 'connect_timeout': 10 if desired
+            },
+        }
+    }
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
