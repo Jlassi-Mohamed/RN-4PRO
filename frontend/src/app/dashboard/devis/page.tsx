@@ -701,11 +701,12 @@ export default function OrdersPage() {
 
       {/* --- Modale consultation produits --- */}
       <Dialog open={openViewProductsDialog} onClose={() => setOpenViewProductsDialog(false)} maxWidth="md" fullWidth>
-        <DialogTitle>
+          <DialogTitle>
           Produits de la commande {selectedOrder?.reference}
           {selectedOrder && (
             <Box sx={{ mt: 1 }}>
               <Grid display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+                {/* Left column */}
                 <Box gridColumn="span 6">
                   <Typography variant="body2">
                     Total HT: {formatNumber(selectedOrder.total_ht)} TND
@@ -717,8 +718,9 @@ export default function OrdersPage() {
                     Total TTC: {formatNumber(selectedOrder.total_ttc)} TND
                   </Typography>
                 </Box>
-                </Grid>
-                <Grid item xs={6}>
+        
+                {/* Right column */}
+                <Box gridColumn="span 6">
                   {selectedOrder.withholding_tax_applied && (
                     <>
                       <Typography variant="body2">
@@ -734,7 +736,7 @@ export default function OrdersPage() {
                       Retenue à la source: Exclue ({selectedOrder.withholding_exclusion_reason})
                     </Typography>
                   )}
-                </Grid>
+                </Box>
               </Grid>
             </Box>
           )}
