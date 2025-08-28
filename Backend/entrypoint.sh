@@ -8,7 +8,7 @@ sleep 5
 
 # Create the database if it doesn't exist
 echo "📂 Ensuring database exists..."
-mysql -h $MYSQLHOST -P $MYSQLPORT -u $MYSQLUSER -p$MYSQLPASSWORD -e "CREATE DATABASE IF NOT EXISTS \`$MYSQLDATABASE\` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
+mysql -h $MYSQLHOST -P $MYSQLPORT -u $MYSQLUSER -p$MYSQLPASSWORD --ssl-mode=DISABLED -e "CREATE DATABASE IF NOT EXISTS \`$MYSQLDATABASE\` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
 
 # Run migrations
 echo "📦 Running migrations..."
