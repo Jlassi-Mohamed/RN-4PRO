@@ -3,9 +3,10 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files
+# Copy package files first for better caching
 COPY package*.json ./
 COPY tsconfig.json ./
+COPY next.config.js ./
 
 # Install dependencies
 RUN npm ci
@@ -13,23 +14,25 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Build Next.js app
+# Build Next.js app with standalone output
 RUN npm run build
 
 # Stage 2: Production image
-FROM node:18-alpine
+FROM node:18-alpine AS production
 
 WORKDIR /app
 
-# Copy only needed files from builder
+# Install dependencies separately for better layer caching
 COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/.next ./.next
+RUN npm ci --only=production --ignore-scripts
+
+# Copy standalone build output
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/next.config.js ./next.config.js
 
 # Expose port
-EXPOSE 3000
+EXPORT 3000
 
 # Start Next.js server
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
