@@ -8,9 +8,9 @@ from django.contrib.auth.models import User
 
 # Pre-defined user credentials (you can change these)
 PRE_DEFINED_USERS = {
-    'admin': {'password': 'admin123', 'role': 'admin'},
-    'manager': {'password': 'manager123', 'role': 'manager'},
-    'stock': {'password': 'stock123', 'role': 'stock'}
+    'admin': {'password': 'A8$!kWz7pF3qLx2', 'role': 'admin'},
+    'manager': {'password': 'M9#dZp4!uV6hRq8', 'role': 'manager'},
+    'stock': {'password': 'S7&nGt5^eX2bWp9', 'role': 'stock'}
 }
 
 

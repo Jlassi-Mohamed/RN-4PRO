@@ -99,24 +99,37 @@ TEMPLATES = [
 WSGI_APPLICATION = 'gestion.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+from dotenv import load_dotenv
+import os
+from urllib.parse import urlparse
 
+# Load .env file
+load_dotenv()
+
+# Parse the MYSQL_PUBLIC_URL
+url = os.environ.get("MYSQL_PUBLIC_URL")
+if not url:
+    raise Exception("MYSQL_PUBLIC_URL is missing in environment variables")
+
+parsed = urlparse(url)
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_DATABASE', config('DB_NAME')),
-        'USER': os.environ.get('MYSQL_USER', config('DB_USER')),
-        'PASSWORD': os.environ.get('MYSQL_PASSWORD', config('DB_PASSWORD')),
-        'HOST': os.environ.get('MYSQL_HOST', config('DB_HOST')),
-        'PORT': os.environ.get('MYSQL_PORT', config('DB_PORT', default='3306')),
+        'NAME': os.environ.get('MYSQLDATABASE', 'gestion'),
+        'USER': os.environ.get('MYSQLUSER', 'root'),
+        'PASSWORD': os.environ.get('MYSQLPASSWORD', ''),
+        'HOST': os.environ.get('MYSQLHOST', 'localhost'),
+        'PORT': os.environ.get('MYSQLPORT', '3306'),
         'OPTIONS': {
             'charset': 'utf8mb4',
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        }
+        },
     }
 }
+
+# Optional: For Railway's public URL if needed for external connections
+MYSQL_PUBLIC_URL = os.environ.get('MYSQL_PUBLIC_URL', '')
 
 
 # Password validation
