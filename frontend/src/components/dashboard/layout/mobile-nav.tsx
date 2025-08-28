@@ -36,13 +36,13 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
     }
   }, []);
 
-  // filter nav items based on role using key
+  // filter nav items based on role
   const filteredItems = navItems.filter((item) => {
     if (!role) return true;
 
-    // hide certain items for stock role
     if (role === 'stock') {
-      return item.key !== 'clients' && item.key !== 'devis';
+      const allowedKeysForStock = ['outils', 'stock', 'fournisseurs'];
+      return allowedKeysForStock.includes(item.key);
     }
 
     return true;
@@ -93,9 +93,9 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
 
 function renderNavItems({ items = [], pathname }: { items?: NavItemConfig[]; pathname: string }): React.JSX.Element {
   const children = items.map((item) => {
-  const { key, ...rest } = item; // extract key
-  return <NavItem key={key} pathname={pathname} {...rest} />; // spread only the rest
-});
+    const { key, ...rest } = item; // remove key from spread
+    return <NavItem key={key} pathname={pathname} {...rest} />;
+  });
 
   return (
     <Stack component="ul" spacing={1} sx={{ listStyle: 'none', m: 0, p: 0 }}>
