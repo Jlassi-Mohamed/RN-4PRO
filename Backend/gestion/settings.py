@@ -99,7 +99,7 @@ else:
             'NAME': os.getenv('MYSQLDATABASE', 'gestion'),
             'USER': os.getenv('MYSQLUSER', 'root'),
             'PASSWORD': os.getenv('MYSQLPASSWORD', ''),
-            'HOST': os.getenv('MYSQLHOST', 'mysql-production-xxx.up.railway.app'),
+            'HOST': os.getenv('MYSQLHOST', 'mysql.railway.internal'),
             'PORT': os.getenv('MYSQLPORT', '3306'),
             'OPTIONS': {
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
