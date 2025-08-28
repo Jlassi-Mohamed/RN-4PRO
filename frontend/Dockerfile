@@ -6,7 +6,7 @@ WORKDIR /app
 # Copy package files first for better caching
 COPY package*.json ./
 COPY tsconfig.json ./
-COPY next.config.js ./
+COPY next.config.mjs ./  # ← Changed to .mjs
 
 # Install dependencies
 RUN npm ci
@@ -22,7 +22,7 @@ FROM node:18-alpine AS production
 
 WORKDIR /app
 
-# Install dependencies separately for better layer caching
+# Install production dependencies only
 COPY --from=builder /app/package*.json ./
 RUN npm ci --only=production --ignore-scripts
 
@@ -32,7 +32,7 @@ COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 
 # Expose port
-EXPORT 3000
+EXPOSE 3000
 
-# Start Next.js server
+# Start Next.js server from standalone build
 CMD ["node", "server.js"]
