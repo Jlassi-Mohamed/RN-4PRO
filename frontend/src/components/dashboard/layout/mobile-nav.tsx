@@ -25,7 +25,6 @@ export interface MobileNavProps {
 
 export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element {
   const pathname = usePathname();
-  const router = useRouter();
   const [role, setRole] = React.useState<string | null>(null);
 
   // read role from localStorage.user
@@ -34,16 +33,15 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
       const userStr = localStorage.getItem('user');
       const user = userStr ? JSON.parse(userStr) : null;
       setRole(user?.role ?? null);
-    } catch (err) {
+    } catch {
       setRole(null);
     }
   }, []);
 
   // filter nav items based on role
   const filteredItems = navItems.filter((item) => {
-    if (!role) return true; // show all if no role
+    if (!role) return true;
     if (role === 'stock') {
-      // hide items meant only for non-stock roles
       return !item.restrictedToNonStock;
     }
     return true;
@@ -141,7 +139,13 @@ function NavItem({ disabled, external, href, icon, matcher, pathname, title }: N
         }}
       >
         <Box sx={{ alignItems: 'center', display: 'flex', justifyContent: 'center', flex: '0 0 auto' }}>
-          {Icon && <Icon fill={active ? 'var(--NavItem-icon-active-color)' : 'var(--NavItem-icon-color)'} fontSize="var(--icon-fontSize-md)" weight={active ? 'fill' : undefined} />}
+          {Icon && (
+            <Icon
+              fill={active ? 'var(--NavItem-icon-active-color)' : 'var(--NavItem-icon-color)'}
+              fontSize="var(--icon-fontSize-md)"
+              weight={active ? 'fill' : undefined}
+            />
+          )}
         </Box>
         <Box sx={{ flex: '1 1 auto' }}>
           <Typography component="span" sx={{ color: 'inherit', fontSize: '0.875rem', fontWeight: 500, lineHeight: '28px' }}>
