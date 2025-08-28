@@ -19,7 +19,6 @@ import { paths } from '@/paths';
 export interface MobileNavProps {
   onClose?: () => void;
   open?: boolean;
-  items?: NavItemConfig[];
 }
 
 export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element {
@@ -37,10 +36,15 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
     }
   }, []);
 
-  // filter nav items based on role
+  // filter nav items based on role using key
   const filteredItems = navItems.filter((item) => {
     if (!role) return true;
-    if (role === 'stock') return !item.restrictedToNonStock;
+
+    // hide certain items for stock role
+    if (role === 'stock') {
+      return item.key !== 'clients' && item.key !== 'devis';
+    }
+
     return true;
   });
 
