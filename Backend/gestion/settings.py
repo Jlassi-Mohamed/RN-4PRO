@@ -13,7 +13,6 @@ SECRET_KEY = os.environ.get(
 )
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# Only allow your frontend domain
 ALLOWED_HOSTS = ['backend-production-d322.up.railway.app']
 
 # Application definition
