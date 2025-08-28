@@ -11,5 +11,5 @@ export interface Config {
 export const config: Config = {
   site: { name: 'RN 4PRO', description: '', themeColor: '#090a0b', url: getSiteURL() },
   logLevel: (process.env.NEXT_PUBLIC_LOG_LEVEL as keyof typeof LogLevel) ?? LogLevel.ALL,
-  apiBaseUrl: 'backend-production-d322.up.railway.app' || 'http://127.0.0.1:8000',
+  apiBaseUrl: 'backend-production-d322.up.railway.app',
 };
