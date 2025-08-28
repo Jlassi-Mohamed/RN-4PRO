@@ -5,7 +5,7 @@ echo "🚀 Entrypoint started..."
 
 # Retry connecting to MySQL until it's ready
 RETRIES=10
-until mysql -h $MYSQLHOST -P $MYSQLPORT -u $MYSQLUSER -p$MYSQLPASSWORD --ssl-mode=DISABLED -e "SELECT 1;" ; do
+until mysql -h $MYSQLHOST -P $MYSQLPORT -u $MYSQLUSER -p$MYSQLPASSWORD --ssl=0 -e "SELECT 1;" ; do
   if [ $RETRIES -le 0 ]; then
     echo "❌ MySQL not ready after multiple attempts."
     exit 1
