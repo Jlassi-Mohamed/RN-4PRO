@@ -704,7 +704,7 @@ export default function OrdersPage() {
           {selectedOrder && (
             <Box sx={{ mt: 1 }}>
               <Grid container spacing={2}>
-                <Grid item xs={6} component="div">
+                <Grid item xs={6}>
                   <Typography variant="body2">
                     Total HT: {formatNumber(selectedOrder.total_ht)} TND
                   </Typography>
