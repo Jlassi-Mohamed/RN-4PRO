@@ -92,7 +92,11 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
 }
 
 function renderNavItems({ items = [], pathname }: { items?: NavItemConfig[]; pathname: string }): React.JSX.Element {
-  const children = items.map((item) => <NavItem key={item.key} pathname={pathname} {...item} />);
+  const children = items.map((item) => {
+  const { key, ...rest } = item; // extract key
+  return <NavItem key={key} pathname={pathname} {...rest} />; // spread only the rest
+});
+
   return (
     <Stack component="ul" spacing={1} sx={{ listStyle: 'none', m: 0, p: 0 }}>
       {children}
