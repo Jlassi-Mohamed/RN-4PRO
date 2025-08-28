@@ -246,10 +246,12 @@ export default async function Page(): Promise<React.JSX.Element> {
       {/* tiny message area for server errors */}
       {errors.length > 0 && (
         <Grid container spacing={3} sx={{ mb: 2 }}>
-          <Grid item xs={12}>
-            <Alert severity="warning" variant="outlined">
-              Certaines données n'ont pas pu être chargées : {errors.join(' · ')}
-            </Alert>
+          <Grid display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+            <Box gridColumn="span 12">
+              <Alert severity="warning" variant="outlined">
+                Certaines données n'ont pas pu être chargées : {errors.join(' · ')}
+              </Alert>
+            </Box>
           </Grid>
         </Grid>
       )}
