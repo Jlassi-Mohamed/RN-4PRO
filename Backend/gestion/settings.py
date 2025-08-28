@@ -94,7 +94,7 @@ DATABASES = {
         'NAME': 'gestion',
         'USER': 'root',
         'PASSWORD': 'pzDXZzJhszWaJAtblsnpBxqNUYytYaBj',
-        'HOST': 'shinkansen.proxy.rlwy.net:35068',
+        'HOST': 'mysql-production-b881.up.railway.app',
         'PORT': '3306',
         'OPTIONS': {
             'charset': 'utf8mb4',
