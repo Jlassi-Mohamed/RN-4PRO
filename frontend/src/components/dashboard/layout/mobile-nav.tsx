@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import RouterLink from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -10,12 +10,11 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import type { NavItemConfig } from '@/types/nav';
-import { paths } from '@/paths';
-import { isNavItemActive } from '@/lib/is-nav-item-active';
-import { Logo } from '@/components/core/logo';
-
 import { navItems } from './config';
 import { navIcons } from './nav-icons';
+import { isNavItemActive } from '@/lib/is-nav-item-active';
+import { Logo } from '@/components/core/logo';
+import { paths } from '@/paths';
 
 export interface MobileNavProps {
   onClose?: () => void;
@@ -41,9 +40,7 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
   // filter nav items based on role
   const filteredItems = navItems.filter((item) => {
     if (!role) return true;
-    if (role === 'stock') {
-      return !item.restrictedToNonStock;
-    }
+    if (role === 'stock') return !item.restrictedToNonStock;
     return true;
   });
 
