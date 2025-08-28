@@ -4,11 +4,14 @@ set -e
 # Default port fallback if Railway does not inject $PORT
 : "${PORT:=8000}"
 
-echo "Applying database migrations..."
-until python manage.py migrate --noinput; do
-  echo "Waiting for database... retrying in 3s"
+echo "Waiting for database to be ready..."
+until python manage.py showmigrations > /dev/null 2>&1; do
+  echo "Database not ready yet... retrying in 3s"
   sleep 3
 done
+
+echo "Applying database migrations..."
+python manage.py migrate --noinput
 
 # --- Create fixed superusers ---
 python manage.py shell <<'EOF'
@@ -34,4 +37,4 @@ echo "Collecting static files..."
 python manage.py collectstatic --noinput || true
 
 echo "Starting Gunicorn on 0.0.0.0:$PORT"
-exec gunicorn backend.wsgi:application --bind 0.0.0.0:"$PORT" --workers 4 --threads 2
+exec gunicorn backend.wsgi:application --bind 0.0.0.0:"$PORT" --workers 4 --threads 2 --log-level info
