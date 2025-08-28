@@ -16,7 +16,7 @@ until mysql -h $MYSQLHOST -P $MYSQLPORT -u $MYSQLUSER -p$MYSQLPASSWORD --ssl-mod
 done
 
 echo "📂 Ensuring database exists..."
-mysql -h $MYSQLHOST -P $MYSQLPORT -u $MYSQLUSER -p$MYSQLPASSWORD --ssl-mode=DISABLED -e "CREATE DATABASE IF NOT EXISTS \`$MYSQLDATABASE\` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
+mysql -h $MYSQLHOST -P $MYSQLPORT -u $MYSQLUSER -p$MYSQLPASSWORD --ssl=0 -e "CREATE DATABASE IF NOT EXISTS \`$MYSQLDATABASE\` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
 
 echo "📦 Running migrations..."
 python manage.py migrate --noinput
