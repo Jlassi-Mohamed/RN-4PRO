@@ -27,8 +27,10 @@ import {
   Box,
   Tabs,
   Tab,
-  Grid,
+  // ❌ Remove Grid from named imports
 } from "@mui/material";
+// ✅ Add default import for Grid
+import Grid from "@mui/material/Grid";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AddIcon from "@mui/icons-material/Add";
 import PrintIcon from "@mui/icons-material/Print";
