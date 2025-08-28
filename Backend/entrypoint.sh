@@ -27,8 +27,8 @@ except Exception as e:
     sys.exit(1)
 PY
 do
-  echo "Database not ready yet... retrying in 3s"
-  sleep 3
+  echo "Database not ready yet... retrying in 10s"
+  sleep 10
 done
 
 echo "✅ MySQL is up - applying migrations..."
